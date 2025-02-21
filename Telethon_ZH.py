@@ -70,5 +70,5 @@ async def handler(event):
 
 # Запуск клиента
 print("Бот запущен и мониторит каналы...")
-client.start()
+client.start(phone=PHONE)
 client.run_until_disconnected()
