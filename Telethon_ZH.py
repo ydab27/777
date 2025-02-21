@@ -18,6 +18,12 @@ MONITORED_CHANNELS = ['@INSIDERUKR', '@BLYSKAVKA_UA', '@VANEK_NIKOLAEV', '@MON1T
 MEDIA_FOLDER = 'H:\\Telethon_Media'
 os.makedirs(MEDIA_FOLDER, exist_ok=True)
 
+SESSION_DIR = '/app/sessions'
+session_file = os.path.join(SESSION_DIR, 'session_name.session')
+if os.path.exists(session_file):
+    os.remove(session_file)
+    print("Сессионный файл удален.")
+
 # Создаем клиент Telethon
 client = TelegramClient('session_name', api_id, api_hash)
 
