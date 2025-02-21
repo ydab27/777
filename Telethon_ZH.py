@@ -25,7 +25,7 @@ if os.path.exists(session_file):
     print("Сессионный файл удален.")
 
 # Создаем клиент Telethon
-client = TelegramClient('session_name', api_id, api_hash)
+client = TelegramClient('new_session_name', API_ID, API_HASH)
 
 # Обработчик новых сообщений
 @client.on(events.NewMessage(chats=MONITORED_CHANNELS))
