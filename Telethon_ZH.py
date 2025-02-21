@@ -1,9 +1,10 @@
 from telethon import TelegramClient, events
-from config import API_ID, API_HASH  # Импортируем api_id и api_hash из config.py
+from config import API_ID, API_HASH, PHONE  # Импортируем api_id и api_hash из config.py
 import os
 
 print("API ID:", os.getenv("TELEGRAM_API_ID"))
 print("API Hash:", os.getenv("TELEGRAM_API_HASH"))
+print("PHONE:", os.getenv("TELEGRAM_PHONE"))
 # Ваши данные
 # Убираем жесткое кодирование и используем переменные окружения
 # api_id = '26101618'
@@ -25,7 +26,7 @@ if os.path.exists(session_file):
     print("Сессионный файл удален.")
 
 # Создаем клиент Telethon
-client = TelegramClient('new_session_name', API_ID, API_HASH)
+client = TelegramClient('new_session_name', API_ID, API_HASH, PHONE)
 
 # Обработчик новых сообщений
 @client.on(events.NewMessage(chats=MONITORED_CHANNELS))
