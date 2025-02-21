@@ -1,5 +1,5 @@
 from telethon import TelegramClient, events
-from config import api_id, api_hash  # Импортируем api_id и api_hash из config.py
+from config import API_ID, API_HASH  # Импортируем api_id и api_hash из config.py
 import os
 
 print("API ID:", os.getenv("TELEGRAM_API_ID"))
