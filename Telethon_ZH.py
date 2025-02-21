@@ -1,9 +1,13 @@
 from telethon import TelegramClient, events
+from config import api_id, api_hash  # Импортируем api_id и api_hash из config.py
 import os
 
+print("API ID:", os.getenv("TELEGRAM_API_ID"))
+print("API Hash:", os.getenv("TELEGRAM_API_HASH"))
 # Ваши данные
-api_id = '26101618'
-api_hash = '060efd03ba4f6fd686e144a169f07f5c'
+# Убираем жесткое кодирование и используем переменные окружения
+# api_id = '26101618'
+# api_hash = '060efd03ba4f6fd686e144a169f07f5c'
 
 # Переменные настройки
 CHANNEL_USERNAME = '@ZHZAGROZA'  # Укажите ваш канал, куда бот будет отправлять сообщения
