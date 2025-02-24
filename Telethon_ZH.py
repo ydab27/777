@@ -4,7 +4,7 @@ import os
 import base64
 from io import BytesIO
 
-# Переменные окружения
+# Переменные окружения  новго
 session_data = os.getenv("TELETHON_SESSION")  # Получаем сессию из переменных окружения
 session_path = "/app/sessions/new_session_name.session"
 
