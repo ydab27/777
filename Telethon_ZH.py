@@ -2,6 +2,7 @@ from telethon import TelegramClient, events
 from config import API_ID, API_HASH, PHONE
 import os
 import base64
+from io import BytesIO
 
 # Переменные окружения
 session_data = os.getenv("TELETHON_SESSION")  # Получаем сессию из переменных окружения
@@ -12,9 +13,11 @@ os.makedirs("/app/sessions", exist_ok=True)
 
 # Декодируем и восстанавливаем файл сессии, если он есть
 if session_data:
-    with open(session_path, "wb") as f:
-        f.write(base64.b64decode(session_data))
-    print("Файл сессии успешно восстановлен.")
+    session_stream = BytesIO(base64.b64decode(session_data))
+    print("Сессия успешно загружена из переменной окружения.")
+else:
+    print("Ошибка: Переменная TELETHON_SESSION пуста!")
+    exit(1)
 
 # Инициализируем клиент Telethon
 client = TelegramClient(session_path, API_ID, API_HASH)
