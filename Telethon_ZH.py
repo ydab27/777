@@ -81,6 +81,8 @@ async def test_send():
 
 with client:
     client.loop.run_until_complete(test_send())
-
+if not client.is_connected():
+    print("Переподключение к Telegram...")
+    client.connect()
 client.run_until_disconnected()
 
