@@ -6,7 +6,7 @@ from io import BytesIO
 
 # Переменные окружения  новго
 session_data = os.getenv("TELETHON_SESSION")  # Получаем сессию из переменных окружения
-session_path = "/app/sessions/my_session.session"
+session_path = "/app/sessions/new_session_name.session"
 
 # Создаём папку для сессии
 
