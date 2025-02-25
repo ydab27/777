@@ -6,14 +6,16 @@ from io import BytesIO
 
 # Переменные окружения  новго
 session_data = os.getenv("TELETHON_SESSION")  # Получаем сессию из переменных окружения
-session_path = "/app/sessions/new_session_name.session"
+session_path = "/app/sessions/my_session.session"
 
 # Создаём папку для сессии
-os.makedirs("/app/sessions", exist_ok=True)
+
 
 # Декодируем и восстанавливаем файл сессии, если он есть
 if session_data:
-    session_stream = BytesIO(base64.b64decode(session_data))
+    os.makedirs("/app/sessions", exist_ok=True)
+    with open(session_path, "wb") as f:
+        f.write(base64.b64decode(session_data))
     print("Сессия успешно загружена из переменной окружения.")
 else:
     print("Ошибка: Переменная TELETHON_SESSION пуста!")
@@ -24,8 +26,20 @@ client = TelegramClient(session_path, API_ID, API_HASH)
 
 # Настройки бота
 CHANNEL_USERNAME = '@ZHZAGROZA'
-KEYWORDS = ['ракетная атака', 'повітряна тривога', 'воздушная тревога', 'Житомир']
-MONITORED_CHANNELS = ['@INSIDERUKR', '@BLYSKAVKA_UA', '@VANEK_NIKOLAEV']
+KEYWORDS = ['ракетная атака', 'повітряна тривога', 'воздушная тревога', 'Житомир', 'БпЛА', 
+    'Житомирі та області повітряна тривога', 'Озерне', 'Житомира', 'Житомирщина', 
+    'Житомщину', 'Житомщини', 'Житомську', 'Житомської', 'Житомирська область', 
+    'Житомська', 'Балістика', 'Загроза балістики', 'Мопеди', 'Шахеди', 'Шахеды', 
+    'Мопеды', 'Шахедов', 'Мопедов', 'мопедов', 'шахедов', 'шахедів', 'мопеди', 
+    'шахеди', 'шахеды', 'мопеды', 'мопед', 'шахед', 'мопеда', 'шахеда', 'Шахед', 
+    'Мопед', 'ракета', 'ракети', 'ракеты', 'ракет', 'балістики', 'Швидкісна ціль', 
+    'Балістики', 'балістикою', 'балістичного', 'КАБ', 'ракетою', 'ракетой', 
+    'ракетна небезпека', 'балистикой', 'балистики', 'балістичних', 'подлетает к', 
+    'підлітає до', 'ту-95мс', 'ту-95м3', 'Ту-22М3', 'Взлет', 'Взліт', 'Ціль на', 
+    'Цель на', 'Втрати військ росії станом', 'тактичної авіації', 'носії калібрів', 
+    'Актуальна карта повітряних тривог', 'Відбій тривоги', 'Втрати військ росії']
+MONITORED_CHANNELS = ['@INSIDERUKR', '@BLYSKAVKA_UA', '@VANEK_NIKOLAEV', '@MON1TOR_UA', '@ZHYTO_BEST', 
+    '@KUDY_LETYT', '@ALARMUKRAINE', '@RAKETA_TREVOGA']
 
 # Папка для сохранения медиа
 MEDIA_FOLDER = '/app/Telethon_Media'
