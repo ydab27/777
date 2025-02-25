@@ -75,14 +75,20 @@ async def handler(event):
 
 # Запуск бота
 print("Бот запущен...")
-client.start(phone=PHONE)
-async def test_send():
-    await client.send_message(CHANNEL_USERNAME, "Тестовое сообщение от бота на Railway!")
+
+async def main():
+    await client.connect()
+    print("Бот подключен!")
+
+    # Запуск основного цикла обработки сообщений
+    print("Бот слушает сообщения...")
+    
+    # Ждём, пока бот будет работать (обработчики уже активны)
+    await client.run_until_disconnected()
+
+    # Это сообщение отправится **только после завершения работы бота**, что не совсем корректно.
+    # Перенеси `await client.send_message(...)` внутрь `handler`, если хочешь тестировать отправку сразу.
 
 with client:
-    client.loop.run_until_complete(test_send())
-if not client.is_connected():
-    print("Переподключение к Telegram...")
-    await client.connect()
-client.run_until_disconnected()
+    client.loop.run_until_complete(main())
 
