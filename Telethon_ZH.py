@@ -83,6 +83,6 @@ with client:
     client.loop.run_until_complete(test_send())
 if not client.is_connected():
     print("Переподключение к Telegram...")
-    client.connect()
+    await client.connect()
 client.run_until_disconnected()
 
