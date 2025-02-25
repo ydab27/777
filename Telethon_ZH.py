@@ -31,10 +31,12 @@ MONITORED_CHANNELS = ['@INSIDERUKR', '@BLYSKAVKA_UA', '@VANEK_NIKOLAEV']
 MEDIA_FOLDER = '/app/Telethon_Media'
 os.makedirs(MEDIA_FOLDER, exist_ok=True)
 
+print("Бот подписан на каналы и слушает сообщения...")
 # Обработчик новых сообщений
 @client.on(events.NewMessage(chats=MONITORED_CHANNELS))
 async def handler(event):
     message = event.message.text.lower() if event.message.text else ""
+    print("Новое сообщение в отслеживаемом канале!")
     print(f"Получено сообщение: {message}")
 
     for keyword in KEYWORDS:
@@ -60,5 +62,11 @@ async def handler(event):
 # Запуск бота
 print("Бот запущен...")
 client.start(phone=PHONE)
+async def test_send():
+    await client.send_message(CHANNEL_USERNAME, "Тестовое сообщение от бота на Railway!")
+
+with client:
+    client.loop.run_until_complete(test_send())
+
 client.run_until_disconnected()
 
