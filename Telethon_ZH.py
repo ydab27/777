@@ -40,7 +40,11 @@ KEYWORDS = ['ракетная атака', 'повітряна тривога', 
     'Актуальна карта повітряних тривог', 'Відбій тривоги', 'Втрати військ росії']
 MONITORED_CHANNELS = ['@INSIDERUKR', '@BLYSKAVKA_UA', '@VANEK_NIKOLAEV', '@MON1TOR_UA', '@ZHYTO_BEST', 
     '@KUDY_LETYT', '@ALARMUKRAINE', '@RAKETA_TREVOGA']
-
+NEGATIVE_KEYWORDS = [
+    'юмор', 'мем', 'анекдот', 'реклама', 'котик', 'котики', 'підписуйся', 'підпишись', 
+    'розіграш', 'конкурс', 'прогноз погоди', 'афіша', 'цитата', 'гороскоп', 'погода',
+    'гороскопи', 'знижка', 'акція', 'розпродаж'
+]
 # Папка для сохранения медиа
 MEDIA_FOLDER = '/app/Telethon_Media'
 os.makedirs(MEDIA_FOLDER, exist_ok=True)
@@ -52,6 +56,10 @@ async def handler(event):
     message = event.message.text.lower() if event.message.text else ""
     print("Новое сообщение в отслеживаемом канале!")
     print(f"Получено сообщение: {message}")
+
+    if any(neg_word in message for neg_word in NEGATIVE_KEYWORDS):
+        print("Сообщение содержит минус-слово, пропущено.")
+        return  # Пропускаем сообщение
 
     for keyword in KEYWORDS:
         if keyword.lower() in message:
