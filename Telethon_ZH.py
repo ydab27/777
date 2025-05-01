@@ -57,9 +57,11 @@ async def handler(event):
     print("Новое сообщение в отслеживаемом канале!")
     print(f"Получено сообщение: {message}")
 
-    if any(neg_word in message for neg_word in NEGATIVE_KEYWORDS):
-        print("Сообщение содержит минус-слово, пропущено.")
-        return  # Пропускаем сообщение
+    # Пропускаем, если содержит минус-слова
+    for neg_word in NEGATIVE_KEYWORDS:
+        if neg_word in message:
+            print(f"Сообщение содержит минус-слово '{neg_word}', пропускаем.")
+            return  # Выходим из обработчика, не обрабатываем сообщение
 
     for keyword in KEYWORDS:
         if keyword.lower() in message:
