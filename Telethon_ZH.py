@@ -87,17 +87,13 @@ async def handler(event):
 print("Бот запущен...")
 
 async def main():
-    await client.connect()
+    await client.start()  # Это подключение и авторизация
     print("Бот подключен!")
 
-    # Запуск основного цикла обработки сообщений
     print("Бот слушает сообщения...")
-    
-    # Ждём, пока бот будет работать (обработчики уже активны)
     await client.run_until_disconnected()
 
-    # Это сообщение отправится **только после завершения работы бота**, что не совсем корректно.
-    # Перенеси `await client.send_message(...)` внутрь `handler`, если хочешь тестировать отправку сразу.
+asyncio.run(main())  # <-- корректный запуск
 
 with client:
     client.loop.run_until_complete(main())
