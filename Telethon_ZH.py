@@ -94,8 +94,5 @@ async def main():
     print("Бот слушает сообщения...")
     await client.run_until_disconnected()
 
-asyncio.run(main())  # <-- корректный запуск
-
-with client:
-    client.loop.run_until_complete(main())
+client.loop.run_until_complete(main())
 
