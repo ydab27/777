@@ -3,6 +3,7 @@ from config import API_ID, API_HASH, PHONE
 import os
 import base64
 from io import BytesIO
+import asyncio
 
 # Переменные окружения  новго
 session_data = os.getenv("TELETHON_SESSION")  # Получаем сессию из переменных окружения
