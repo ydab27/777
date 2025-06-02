@@ -76,9 +76,9 @@ async def handler(event):
 
             try:
                 if file_path:
-                    await client.send_file(CHANNEL_USERNAME, file_path, caption=f"Новость: {event.message.text}")
+                    await client.send_file(CHANNEL_USERNAME, file_path, caption=f"Новини: {event.message.text}")
                 else:
-                    await client.send_message(CHANNEL_USERNAME, f"Новость: {event.message.text}")
+                    await client.send_message(CHANNEL_USERNAME, f"Новини: {event.message.text}")
                 print("Сообщение отправлено")
             except Exception as e:
                 print(f"Ошибка отправки сообщения: {e}")
