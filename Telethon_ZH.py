@@ -22,7 +22,7 @@ else:
 
 # Настройки
 client = TelegramClient(session_path, API_ID, API_HASH)
-CHANNEL_USERNAME = '@ZHZAGROZA'
+CHANNEL_USERNAME = '@POVITRYANAZZH'
 
 # Каналы для мониторинга
 MONITORED_CHANNELS = [
