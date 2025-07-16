@@ -1,27 +1,24 @@
 import os
-import base64
 import asyncio
 from telethon import TelegramClient, events
-from config import API_ID, API_HASH, PHONE
+from telethon.sessions import StringSession
 
-# Инициализация путей и папок
-session_data = os.getenv("TELETHON_SESSION")
-session_path = "/app/sessions/new_session_name.session"
-media_folder = '/app/Telethon_Media'
-os.makedirs("/app/sessions", exist_ok=True)
-os.makedirs(media_folder, exist_ok=True)
+# Загружаем переменные окружения
+API_ID = int(os.getenv("TELEGRAM_API_ID"))
+API_HASH = os.getenv("TELEGRAM_API_HASH")
+SESSION_STRING = os.getenv("TELETHON_SESSION")
 
-# Загружаем session
-if session_data:
-    with open(session_path, "wb") as f:
-        f.write(base64.b64decode(session_data))
-    print("✅ Сессия успешно загружена.")
-else:
+# Проверка сессии
+if not SESSION_STRING:
     print("❌ Ошибка: переменная TELETHON_SESSION пуста!")
     exit(1)
+else:
+    print("✅ Сессия успешно загружена из переменной окружения.")
 
-# Настройки
-client = TelegramClient(session_path, API_ID, API_HASH)
+# Создание клиента Telethon с использованием StringSession
+client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
+
+# Канал для отправки сообщений
 CHANNEL_USERNAME = '@POVITRYANAZZH'
 
 # Каналы для мониторинга
@@ -48,6 +45,10 @@ NEGATIVE_KEYWORDS = [
     'цитата', 'знижка', 'акція', 'на щиті', 'коляски'
 ]
 
+# Папка для медиа (если понадобится)
+MEDIA_FOLDER = '/app/Telethon_Media'
+os.makedirs(MEDIA_FOLDER, exist_ok=True)
+
 # Обработчик новых сообщений
 @client.on(events.NewMessage(chats=MONITORED_CHANNELS))
 async def handler(event):
@@ -71,7 +72,7 @@ async def handler(event):
             file_path = None
             if event.message.media:
                 try:
-                    file_path = await client.download_media(event.message.media, media_folder)
+                    file_path = await client.download_media(event.message.media, MEDIA_FOLDER)
                     print(f"📁 Медиа сохранено: {file_path}")
                 except Exception as e:
                     print(f"⚠️ Ошибка при скачивании медиа: {e}")
@@ -92,14 +93,14 @@ async def main():
     await client.start()
     print("🤖 Бот запущен и слушает...")
 
-    # Проверка подписки — вывод всех доступных каналов
+    # Вывод каналов, к которым есть доступ
     dialogs = await client.get_dialogs()
     print("📋 Аккаунт видит каналы:")
     for d in dialogs:
         if d.is_channel:
             print(f" - {d.name} | @{getattr(d.entity, 'username', 'нет username')}")
 
-    # Тестовое сообщение (можно закомментировать)
+    # Тестовое сообщение
     try:
         await client.send_message(CHANNEL_USERNAME, "✅ Тест: бот успешно запущен и работает.")
     except Exception as e:
